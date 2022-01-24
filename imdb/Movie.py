@@ -302,36 +302,52 @@ class Movie(_Container):
                     n += ' (%s)' % person.currentRole
                 nl.append(n)
             return joiner.join(nl)
-        s = 'Movie\n=====\nTitle: %s\n' % self.get('long imdb canonical title', '')
+        s = 'Title         : %s\n' % self.get('long imdb canonical title', '')
+
         genres = self.get('genres')
         if genres:
-            s += 'Genres: %s.\n' % ', '.join(genres)
+            s += 'Genres        : %s\n' % ', '.join(genres)
+
         director = self.get('director')
         if director:
-            s += 'Director: %s.\n' % _nameAndRole(director)
+            s += 'Director      : %s\n' % _nameAndRole(director)
+
         writer = self.get('writer')
         if writer:
-            s += 'Writer: %s.\n' % _nameAndRole(writer)
+            s += 'Writer        : %s\n' % _nameAndRole(writer)
+
         cast = self.get('cast')
         if cast:
-            cast = cast[:5]
-            s += 'Cast: %s.\n' % _nameAndRole(cast)
+            cast = cast[:10]
+            s += 'Cast          : %s\n' % _nameAndRole(cast)
+
         runtime = self.get('runtimes')
         if runtime:
-            s += 'Runtime: %s.\n' % ', '.join(runtime)
+            s += 'Runtime       : %s\n' % ', '.join(runtime)
+
+        certificate = self.get('certificates')
+        if certificate:
+            s += 'Certificate   : %s\n' % ', '.join(certificate)
+
+        cover = self.get('full-size cover url')
+        if cover:
+            s += 'Cover URL     : %s\n' % ''.join(cover)
+
         countries = self.get('countries')
         if countries:
-            s += 'Country: %s.\n' % ', '.join(countries)
+            s += 'Country       : %s\n' % ', '.join(countries)
+
         lang = self.get('languages')
         if lang:
-            s += 'Language: %s.\n' % ', '.join(lang)
+            s += 'Language      : %s\n' % ', '.join(lang)
+
         rating = self.get('rating')
         if rating:
-            s += 'Rating: %s' % rating
+            s += 'Rating        : %s' % rating
             nr_votes = self.get('votes')
             if nr_votes:
-                s += ' (%s votes)' % nr_votes
-            s += '.\n'
+                s += ' (%s votes)\n' % nr_votes
+
         plot = self.get('plot')
         if not plot:
             plot = self.get('plot summary')
@@ -342,5 +358,5 @@ class Movie(_Container):
             i = plot.find('::')
             if i != -1:
                 plot = plot[:i]
-            s += 'Plot: %s' % plot
+            s += 'Plot      : %s' % plot
         return s
